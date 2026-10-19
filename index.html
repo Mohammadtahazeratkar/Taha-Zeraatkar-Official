@@ -15,7 +15,7 @@
 <body>
 <header class="topbar"><div class="wrap nav">
 <a class="brand" href="#"><span class="seal">یاحسین</span><span>پایگاه رسمی<br>کربلایی طاها زراعتکار</span></a>
-<nav class="navlinks" aria-label="ناوبری"><a href="#special">ویژه‌ها</a><a href="#audio">صوت‌ها</a><a href="#video">ویدئوها</a><a href="#social">صفحات رسمی</a><a href="#about">درباره ما</a></nav>
+<nav class="navlinks" aria-label="ناوبری"><a href="#special">ویژه‌ها</a><a href="#audio">صوت‌ها</a><a href="#video">ویدئوها</a><a href="#social">صفحات رسمی</a><a href="#about">درباره ما</a><a href="./admin.html">ورود مدیر</a></nav>
 </div></header>
 <main class="wrap">
 <section class="hero">
@@ -53,4 +53,23 @@ const search=document.getElementById('search'),kind=document.getElementById('kin
 function filterRows(){let q=search.value.trim().toLocaleLowerCase('fa');let k=kind.value;let n=0;rows.forEach(r=>{let ok=r.dataset.title.toLocaleLowerCase('fa').includes(q)&&(k==='all'||r.dataset.kind===k);r.style.display=ok?'flex':'none';if(ok)n++});empty.style.display=n?'none':'block'}
 search.addEventListener('input',filterRows);kind.addEventListener('change',filterRows);
 </script>
-</body></html>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const sb=createClient('https://spgeujeicliaefowbqmh.supabase.co','sb_publishable_NYH7W006Rd561XQWY_hsdq_RYkOBe_I');
+const {data:copy}=await sb.from('site_content').select('id,body');
+const textById=Object.fromEntries((copy||[]).map(x=>[x.id,x.body]));
+const heroTitle=document.querySelector('.hero h1');if(heroTitle&&textById.hero_tagline)heroTitle.textContent=textById.hero_tagline;
+const heroDesc=document.querySelector('.hero>div>p');if(heroDesc&&textById.hero_description)heroDesc.textContent=textById.hero_description;
+const about=document.querySelector('#about .about p');if(about&&textById.about)about.textContent=textById.about;
+[['social_telegram','#social a[href*="t.me"]'],['social_instagram','#social a[href*="instagram.com"]'],['social_eitaa','#social a[href*="eitaa.co"]'],['social_bale','#social a[href*="ble.ir"]']].forEach(([key,sel])=>{const a=document.querySelector(sel);if(a&&textById[key]&&/^https:\/\//i.test(textById[key]))a.href=textById[key]});
+const {data:media}=await sb.from('media_items').select('id,title,description,media_type,public_url,created_at').eq('is_published',true).order('created_at',{ascending:false});
+if(media?.length){
+const tracks=document.getElementById('tracks');tracks.replaceChildren();
+media.filter(m=>m.media_type==='audio').forEach(m=>{const row=document.createElement('div');row.className='track';row.dataset.title=m.title;row.dataset.kind='مداحی';const play=document.createElement('audio');play.controls=true;play.preload='none';play.src=m.public_url;play.style.maxWidth='130px';const main=document.createElement('div');main.className='track-main';const title=document.createElement('strong');title.textContent=m.title;const desc=document.createElement('span');desc.textContent=m.description||'کربلایی طاها زراعتکار';main.append(title,desc);row.append(play,main);tracks.append(row)});
+const videoSection=document.querySelector('#video .grid');videoSection.replaceChildren();
+media.filter(m=>m.media_type==='video').forEach(m=>{const card=document.createElement('article');card.className='card';const video=document.createElement('video');video.controls=true;video.preload='metadata';video.src=m.public_url;video.style.width='100%';video.style.borderRadius='12px';const h=document.createElement('h3');h.textContent=m.title;const p=document.createElement('p');p.textContent=m.description||'ویدئوی مراسم';card.append(video,h,p);videoSection.append(card)});
+const posters=media.filter(m=>m.media_type==='poster');if(posters.length){const sec=document.createElement('section');sec.className='section';const head=document.createElement('div');head.className='section-head';const h=document.createElement('h2');h.textContent='پوسترهای منتشرشده';head.append(h);sec.append(head);const grid=document.createElement('div');grid.className='grid';posters.forEach(m=>{const card=document.createElement('article');card.className='card';const img=document.createElement('img');img.src=m.public_url;img.alt=m.title;img.loading='lazy';img.style.width='100%';img.style.borderRadius='10px';const t=document.createElement('h3');t.textContent=m.title;card.append(img,t);grid.append(card)});sec.append(grid);document.querySelector('#social').before(sec)}
+}
+</script>
+\n</body></html>
