@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#100d0e"><title>پنل مدیریت | پایگاه رسمی</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+:root{color-scheme:dark;--bg:#100d0e;--panel:#1d1517;--line:#432a2e;--gold:#d8b56b;--red:#a92532;--text:#f8f0ec;--muted:#c1aeaa}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#421d24,transparent 45%),var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.8}.wrap{width:min(980px,92%);margin:36px auto}.head{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:24px}.head h1{font-size:25px;margin:0}.head p{margin:0;color:var(--muted);font-size:13px}.panel{background:#1c1517eF;border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0}.panel h2{font-size:19px;margin:0 0 14px;color:var(--gold)}label{display:block;font-size:13px;margin:10px 0 5px;color:#eadbd4}input,textarea,select{width:100%;border:1px solid #4a3033;background:#100d0e;color:#fff;padding:11px 12px;border-radius:9px;font:inherit}textarea{min-height:92px;resize:vertical}button,.button{font:inherit;cursor:pointer;border:1px solid var(--red);background:var(--red);color:white;border-radius:9px;padding:10px 16px;margin-top:12px}.secondary{background:transparent;border-color:#795d3a;color:var(--gold)}.danger{border-color:#75414a;background:#3b1c22}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hidden{display:none!important}.notice{padding:12px 14px;background:#251b1d;border:1px solid #5b3a3e;border-radius:10px;color:#f0d9d5;margin:12px 0;white-space:pre-wrap}.hint{font-size:12px;color:var(--muted)}.item{border-top:1px solid var(--line);padding:14px 0;display:flex;gap:15px;justify-content:space-between;align-items:center}.item small{display:block;color:var(--muted)}.item button{margin:3px 0 3px 5px}.badge{font-size:11px;color:var(--gold);border:1px solid #70532f;border-radius:30px;padding:2px 8px}.bar{display:flex;gap:8px;flex-wrap:wrap}.bar button{margin-top:0}@media(max-width:650px){.row{grid-template-columns:1fr}.panel{padding:16px}.item{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body><main class="wrap">
+<header class="head"><div><h1>پنل مدیریت پایگاه رسمی</h1><p>کربلایی طاها زراعتکار · مدیریت محتوا و آرشیو رسانه</p></div><a class="button secondary" href="./">بازگشت به سایت</a></header>
+<div id="notice" class="notice">برای ورود، لینک امن به ایمیل مدیر ارسال می‌شود.</div>
+<section id="login" class="panel"><h2>ورود مدیر</h2><p class="hint">ورود فقط برای ایمیل مجاز مدیر فعال است. رمز عبور خود را در این صفحه وارد نکنید؛ لینک ورود به ایمیل شما فرستاده می‌شود.</p>
+<label for="email">ایمیل مدیر</label><input id="email" type="email" autocomplete="email" value="mohammadtahazeratkar1@gmail.com">
+<button id="send">ارسال لینک ورود امن</button>
+</section>
+<div id="dashboard" class="hidden">
+<section class="panel"><div class="head"><div><h2>محتوای سایت</h2><p>متن‌های اصلی را ویرایش و ذخیره کنید.</p></div><button id="logout" class="secondary">خروج امن</button></div><div id="content-fields"></div><button id="save-content">ذخیره تغییرات متن</button></section>
+<section class="panel"><h2>بارگذاری فایل</h2><p class="hint">فایل صوتی، ویدئو یا پوستر انتخاب کنید. فایل‌ها در فضای رسانه ذخیره می‌شوند و می‌توانید نمایش عمومی آن‌ها را کنترل کنید.</p>
+<label for="media-title">عنوان فایل</label><input id="media-title" placeholder="مثلاً روضه شب اول فاطمیه">
+<div class="row"><div><label for="media-type">نوع فایل</label><select id="media-type"><option value="audio">صوت</option><option value="video">ویدئو</option><option value="poster">پوستر</option></select></div><div><label for="media-file">انتخاب فایل</label><input id="media-file" type="file" accept="audio/*,video/*,image/*"></div></div>
+<label for="media-description">توضیحات (اختیاری)</label><textarea id="media-description" placeholder="توضیح کوتاه درباره اثر"></textarea>
+<label><input id="media-published" type="checkbox" checked style="width:auto"> نمایش عمومی پس از بارگذاری</label><button id="upload">بارگذاری و ثبت فایل</button>
+</section>
+<section class="panel"><h2>آرشیو فایل‌ها</h2><div id="media-list"><p class="hint">برای مشاهده آرشیو ابتدا وارد شوید.</p></div></section>
+</div>
+</main>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const SUPABASE_URL='https://spgeujeicliaefowbqmh.supabase.co';
+const SUPABASE_KEY='sb_publishable_NYH7W006Rd561XQWY_hsdQ_RYkOBe_I';
+const supabase=createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);let contentRows=[];
+function note(msg){$('notice').textContent=msg;$('notice').classList.remove('hidden')}
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('send').onclick=async()=>{const email=$('email').value.trim().toLowerCase();if(email!=='mohammadtahazeratkar1@gmail.com'){note('این ایمیل مجاز نیست.');return} $('send').disabled=true;note('در حال ارسال لینک ورود…');const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:location.href.split('?')[0]}});$('send').disabled=false;note(error?'ارسال انجام نشد: '+error.message:'اگر تنظیمات ایمیل پروژه آماده باشد، لینک ورود امن برای شما ارسال می‌شود. ایمیل و پوشه هرزنامه را بررسی کنید.')}
+$('logout').onclick=async()=>{await supabase.auth.signOut();location.reload()};
+async function showSession(session){if(!session){$('login').classList.remove('hidden');$('dashboard').classList.add('hidden');return}
+const {data,isAdmin,error}=await supabase.rpc('is_site_admin');if(error||data!==true){await supabase.auth.signOut();note('این حساب دسترسی مدیریت ندارد.');$('login').classList.remove('hidden');return}
+$('login').classList.add('hidden');$('dashboard').classList.remove('hidden');note('ورود موفق؛ خوش آمدید.');await loadContent();await loadMedia()}
+async function loadContent(){const {data,error}=await supabase.from('site_content').select('id,title,body').order('id');if(error){note('خطا در دریافت متن‌ها: '+error.message);return}contentRows=data||[];$('content-fields').innerHTML=contentRows.map((r,i)=>'<div class="panel"><label for="content-'+i+'">'+safe(r.title)+'</label><textarea id="content-'+i+'" data-index="'+i+'">'+safe(r.body)+'</textarea></div>').join('')}
+$('save-content').onclick=async()=>{for(const el of $('content-fields').querySelectorAll('textarea')){const r=contentRows[Number(el.dataset.index)];const {error}=await supabase.from('site_content').update({body:el.value,updated_at:new Date().toISOString()}).eq('id',r.id);if(error){note('ذخیره ناموفق بود: '+error.message);return}}note('متن‌ها ذخیره شدند.');await loadContent()}
+$('upload').onclick=async()=>{const file=$('media-file').files[0],title=$('media-title').value.trim();if(!file||!title){note('عنوان و فایل را وارد کنید.');return}if(file.size>100*1024*1024){note('برای این پنل، فایل‌های بزرگ‌تر از ۱۰۰ مگابایت را فعلاً بارگذاری نکنید.');return}const type=$('media-type').value;if((type==='audio'&&!file.type.startsWith('audio/'))||(type==='video'&&!file.type.startsWith('video/'))||(type==='poster'&&!file.type.startsWith('image/'))){note('نوع فایل با دسته انتخاب‌شده سازگار نیست.');return}
+$('upload').disabled=true;note('در حال بارگذاری فایل…');const clean=file.name.replace(/[^\p{L}\p{N}._-]+/gu,'-');const path=type+'/'+Date.now()+'-'+clean;const up=await supabase.storage.from('site-media').upload(path,file,{contentType:file.type,upsert:false});if(up.error){$('upload').disabled=false;note('بارگذاری ناموفق بود: '+up.error.message);return}const {data:urlData}=supabase.storage.from('site-media').getPublicUrl(path);const ins=await supabase.from('media_items').insert({title,description:$('media-description').value.trim(),media_type:type,storage_path:path,public_url:urlData.publicUrl,is_published:$('media-published').checked});$('upload').disabled=false;if(ins.error){note('فایل بارگذاری شد اما ثبت آن ناموفق بود: '+ins.error.message);return}$('media-title').value='';$('media-description').value='';$('media-file').value='';note('فایل با موفقیت بارگذاری شد.');await loadMedia()}
+async function loadMedia(){const {data,error}=await supabase.from('media_items').select('*').order('created_at',{ascending:false});if(error){$('media-list').textContent=error.message;return}if(!data?.length){$('media-list').innerHTML='<p class="hint">هنوز فایلی بارگذاری نشده است.</p>';return}$('media-list').innerHTML=data.map(m=>'<div class="item"><div><strong>'+safe(m.title)+'</strong><small>'+({audio:'صوت',video:'ویدئو',poster:'پوستر'}[m.media_type]||'رسانه')+' · '+(m.is_published?'نمایش عمومی':'پیش‌نویس')+'</small><small><a href="'+safe(m.public_url)+'" target="_blank" rel="noopener">مشاهده فایل ↗</a></small></div><div class="bar"><button class="secondary" data-toggle="'+m.id+'" data-state="'+m.is_published+'">'+(m.is_published?'مخفی‌کردن':'انتشار')+'</button><button class="danger" data-delete="'+m.id+'" data-path="'+safe(m.storage_path)+'">حذف</button></div></div>').join('');
+$('media-list').querySelectorAll('[data-toggle]').forEach(b=>b.onclick=async()=>{const {error}=await supabase.from('media_items').update({is_published:b.dataset.state!=='true',updated_at:new Date().toISOString()}).eq('id',b.dataset.toggle);if(error)note(error.message);else await loadMedia()});
+$('media-list').querySelectorAll('[data-delete]').forEach(b=>b.onclick=async()=>{if(!confirm('این فایل از آرشیو حذف شود؟'))return;const {error}=await supabase.from('media_items').delete().eq('id',b.dataset.delete);if(error){note(error.message);return}await supabase.storage.from('site-media').remove([b.dataset.path]);note('فایل حذف شد.');await loadMedia()})}
+supabase.auth.onAuthStateChange((_event,session)=>{showSession(session)});const {data:{session}}=await supabase.auth.getSession();await showSession(session);
+</script>
+</body></html>
