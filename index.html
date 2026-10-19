@@ -49,8 +49,8 @@
 </main>
 <footer><div class="wrap foot"><span>© پایگاه رسمی کربلایی طاها زراعتکار</span><span>تمام حقوق محتوا برای صاحبان آثار محفوظ است.</span></div></footer>
 <script>
-const search=document.getElementById('search'),kind=document.getElementById('kind'),rows=[...document.querySelectorAll('.track')],empty=document.getElementById('empty');
-function filterRows(){let q=search.value.trim().toLocaleLowerCase('fa');let k=kind.value;let n=0;rows.forEach(r=>{let ok=r.dataset.title.toLocaleLowerCase('fa').includes(q)&&(k==='all'||r.dataset.kind===k);r.style.display=ok?'flex':'none';if(ok)n++});empty.style.display=n?'none':'block'}
+const search=document.getElementById('search'),kind=document.getElementById('kind'),empty=document.getElementById('empty');
+function filterRows(){const rows=[...document.querySelectorAll('.track')];let q=search.value.trim().toLocaleLowerCase('fa');let k=kind.value;let n=0;rows.forEach(r=>{let ok=r.dataset.title.toLocaleLowerCase('fa').includes(q)&&(k==='all'||r.dataset.kind===k);r.style.display=ok?'flex':'none';if(ok)n++});empty.style.display=n?'none':'block'}
 search.addEventListener('input',filterRows);kind.addEventListener('change',filterRows);
 </script>
 
