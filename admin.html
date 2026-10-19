@@ -12,7 +12,7 @@
 <header class="head"><div><h1>پنل مدیریت پایگاه رسمی</h1><p>کربلایی طاها زراعتکار · مدیریت محتوا و آرشیو رسانه</p></div><a class="button secondary" href="./">بازگشت به سایت</a></header>
 <div id="notice" class="notice">برای ورود، لینک امن به ایمیل مدیر ارسال می‌شود.</div>
 <section id="login" class="panel"><h2>ورود مدیر</h2><p class="hint">ورود فقط برای ایمیل مجاز مدیر فعال است. رمز عبور خود را در این صفحه وارد نکنید؛ لینک ورود به ایمیل شما فرستاده می‌شود.</p>
-<label for="email">ایمیل مدیر</label><input id="email" type="email" autocomplete="email" value="mohammadtahazeratkar1@gmail.com">
+<label for="email">ایمیل مدیر</label><input id="email" type="email" autocomplete="email" value="mohammadtahazeratkar14@gmail.com">
 <button id="send">ارسال لینک ورود امن</button>
 </section>
 <div id="dashboard" class="hidden">
@@ -34,7 +34,7 @@ const supabase=createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=id=>document.getElementById(id);let contentRows=[];
 function note(msg){$('notice').textContent=msg;$('notice').classList.remove('hidden')}
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-$('send').onclick=async()=>{const email=$('email').value.trim().toLowerCase();if(email!=='mohammadtahazeratkar1@gmail.com'){note('این ایمیل مجاز نیست.');return} $('send').disabled=true;note('در حال ارسال لینک ورود…');const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:location.href.split('?')[0]}});$('send').disabled=false;note(error?'ارسال انجام نشد: '+error.message:'اگر تنظیمات ایمیل پروژه آماده باشد، لینک ورود امن برای شما ارسال می‌شود. ایمیل و پوشه هرزنامه را بررسی کنید.')}
+$('send').onclick=async()=>{const email=$('email').value.trim().toLowerCase();if(email!=='mohammadtahazeratkar14@gmail.com'){note('این ایمیل مجاز نیست.');return} $('send').disabled=true;note('در حال ارسال لینک ورود…');const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:location.href.split('?')[0]}});$('send').disabled=false;note(error?'ارسال انجام نشد: '+error.message:'اگر تنظیمات ایمیل پروژه آماده باشد، لینک ورود امن برای شما ارسال می‌شود. ایمیل و پوشه هرزنامه را بررسی کنید.')}
 $('logout').onclick=async()=>{await supabase.auth.signOut();location.reload()};
 async function showSession(session){if(!session){$('login').classList.remove('hidden');$('dashboard').classList.add('hidden');return}
 const {data,isAdmin,error}=await supabase.rpc('is_site_admin');if(error||data!==true){await supabase.auth.signOut();note('این حساب دسترسی مدیریت ندارد.');$('login').classList.remove('hidden');return}
